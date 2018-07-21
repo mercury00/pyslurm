@@ -144,6 +144,7 @@ cdef extern from 'slurm/slurm.h' nogil:
     uint64_t NO_VAL64
 
     ctypedef int64_t bitstr_t
+    ctypedef bitstr_t bitoff_t
 
     cdef enum job_states:
         JOB_PENDING
@@ -682,11 +683,6 @@ cdef extern from 'slurm/slurm.h' nogil:
 
     ctypedef int (*ListForF) (void *x, void *arg)
 
-    ctypedef struct job_resources:
-        pass
-
-    ctypedef job_resources job_resources_t
-
     ctypedef struct select_jobinfo:
         pass
 
@@ -1068,6 +1064,32 @@ cdef extern from 'slurm/slurm.h' nogil:
         uint16_t wait_time
 
     ctypedef slurm_ctl_conf slurm_ctl_conf_t
+
+cdef extern from "*":
+    ctypedef struct job_resources:
+        #pass
+        bitstr_t *core_bitmap
+        bitstr_t *core_bitmap_used
+        uint32_t  cpu_array_cnt
+        uint16_t *cpu_array_value
+        uint32_t *cpu_array_reps
+        uint16_t *cpus
+        uint16_t *cpus_used
+        uint16_t *cores_per_socket
+        uint64_t *memory_allocated
+        uint64_t *memory_used
+        uint32_t  nhosts
+        bitstr_t *node_bitmap
+        uint32_t  node_req
+        char     *nodes
+        uint32_t  ncpus
+        uint32_t *sock_core_rep_count
+        uint16_t *sockets_per_node
+        uint8_t   whole_node
+
+    ctypedef job_resources job_resources_t
+
+cdef extern from "slurm/slurm.h" nogil:
 
     ctypedef struct job_info:
         char *account
@@ -1750,9 +1772,6 @@ cdef extern from 'slurm/slurm.h' nogil:
         uint32_t plugin_id
 
     ctypedef dynamic_plugin_data dynamic_plugin_data_t
-
-    ctypedef int64_t bitstr_t
-    ctypedef bitstr_t bitoff_t
 
     ctypedef struct block_job_info_t:
         char *cnodes
@@ -2837,3 +2856,9 @@ cdef extern int slurm_env_array_overwrite(char ***array_ptr, const_char_ptr name
 cdef extern int slurm_env_array_overwrite_fmt(char ***array_ptr, const_char_ptr name, const_char_ptr value_fmt, ...)
 
 cdef extern char *slurm_get_checkpoint_dir()
+cdef extern bitoff_t slurm_bit_fls(bitstr_t *b)
+cdef extern bitstr_t *slurm_bit_alloc(bitoff_t nbits)
+cdef extern int slurm_bit_test(bitstr_t *b, bitoff_t bit)
+cdef extern void slurm_bit_set(bitstr_t *b, bitoff_t bit)
+cdef extern char *slurm_bit_fmt(char *str, int len, bitstr_t *b)
+cdef extern void slurm_bit_free(bitstr_t *b)
