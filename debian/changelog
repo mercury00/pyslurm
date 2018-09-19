@@ -1,3 +1,9 @@
+python3-pyslurm (17.11.09-1) testing; urgency=low
+
+  * Update for python3 build
+
+ -- aaron <mercury00@slurm.local>  Tue, 18 Sep 2018 19:30:26 -0700
+
 python-pyslurm (2.2.8-1) unstable; urgency=low
 
   * Non-maintainer upload.

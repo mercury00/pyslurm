@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-from __future__ import print_function
+#!/usr/bin/env python3
+#from __future__ import print_function
 
 import os
 import logging
@@ -9,7 +9,6 @@ from setuptools import setup
 from distutils.dir_util import remove_tree
 from distutils.core import Extension
 from distutils.version import LooseVersion
-
 
 CYTHON_VERSION_MIN = "0.15"
 
@@ -44,8 +43,8 @@ def info(logstring):
     logger.info(logstring)
 
 
-if sys.version_info[:2] < (2, 6) or (3, 0) <= sys.version_info[:2] < (3, 4):
-    fatal("Python >= 2.6 or >= 3.4 is required to run PySlurm.")
+if (3, 9) <= sys.version_info[:2] < (3, 4):
+    fatal("Python >= 3.4 is required to run PySlurm.")
 
 try:
     from Cython.Distutils import build_ext
@@ -254,7 +253,7 @@ def build():
     elif not SLURM_DIR and (not SLURM_LIB or not SLURM_INC):
         usage()
 
-    # Test for slurm.h maybe from derived paths 
+    # Test for slurm.h maybe from derived paths
     if not os.path.exists("%s/slurm/slurm.h" % SLURM_INC):
         info("Build - Cannot locate the Slurm include in %s" % SLURM_INC)
         usage()
@@ -264,7 +263,7 @@ def build():
     else:
         info("Build - Found Slurm header in %s" % SLURM_INC)
 
-    # Test for supported min and max Slurm versions 
+    # Test for supported min and max Slurm versions
     try:
         SLURM_INC_VER = read_inc_version("%s/slurm/slurm.h" % SLURM_INC)
     except IOError:
@@ -342,7 +341,7 @@ def setup_package():
         platforms=["Linux"],
         keywords=["HPC", "Batch Scheduler", "Resource Manager", "Slurm", "Cython"],
         packages=["pyslurm"],
-        install_requires=["Cython"],
+        install_requires=["Cython3"],
         ext_modules=extensions,
         cmdclass={"build_ext": build_ext },
         classifiers=[
@@ -355,9 +354,6 @@ def setup_package():
             'Operating System :: POSIX :: Linux',
             'Programming Language :: Cython',
             'Programming Language :: Python',
-            'Programming Language :: Python :: 2',
-            'Programming Language :: Python :: 2.6',
-            'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3',
             'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: 3.5',

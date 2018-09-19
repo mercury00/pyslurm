@@ -1,13 +1,13 @@
-Source: python-pyslurm
+Source: python3-pyslurm
 Priority: extra
 Maintainer: Stéphan Gorget <stephan.gorget@edf.fr>
 Section: python
-Build-Depends: debhelper (>= 7), python-setuptools (>= 0.6), libslurm-dev, cython (>= 0.15), python-dev
-X-Python-Version: >= 2.6
+Build-Depends: debhelper (>= 9), python3-setuptools (>= 0.6), libslurm-dev, cython3 (>= 0.15), python3-dev
+X-Python3-Version: >= 3.4
 Standards-Version: 3.9.2
 Homepage: http://www.gingergeeks.co.uk/pyslurm/
 
-Package: python-pyslurm
+Package: python3-pyslurm
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Python API for slurm
